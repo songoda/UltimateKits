@@ -2,7 +2,7 @@ package com.craftaro.ultimatekits.gui;
 
 import com.craftaro.core.gui.Gui;
 import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.utils.ItemUtils;
+import com.craftaro.core.utils.SkullItemCreator;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.ultimatekits.UltimateKits;
 import com.craftaro.ultimatekits.kit.Kit;
@@ -31,7 +31,7 @@ public class KitDecorOptionsGui extends Gui {
                 event -> exit());
 
         // back button
-        setButton(0, 0, GuiUtils.createButtonItem(ItemUtils.getCustomHead("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
+        setButton(0, 0, GuiUtils.createButtonItem(SkullItemCreator.byTextureUrlHash("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
                         plugin.getLocale().getMessage("interface.button.back").getMessage()),
                 ClickType.LEFT,
                 event -> event.player.closeInventory());
