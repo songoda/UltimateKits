@@ -3,11 +3,9 @@ package com.craftaro.ultimatekits.gui;
 import com.craftaro.core.gui.Gui;
 import com.craftaro.core.gui.GuiUtils;
 import com.craftaro.core.utils.NumberUtils;
+import com.craftaro.core.utils.SkullItemCreator;
 import com.craftaro.core.utils.TextUtils;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
-import com.craftaro.third_party.com.cryptomorin.xseries.profiles.builder.XSkull;
-import com.craftaro.third_party.com.cryptomorin.xseries.profiles.objects.ProfileInputType;
-import com.craftaro.third_party.com.cryptomorin.xseries.profiles.objects.Profileable;
 import com.craftaro.ultimatekits.UltimateKits;
 import com.craftaro.ultimatekits.kit.Kit;
 import com.craftaro.ultimatekits.settings.Settings;
@@ -88,8 +86,7 @@ public class PreviewKitGui extends Gui {
                     event -> exit());
 
             if (back != null) {
-                ItemStack buttonItem = XSkull.createItem().profile(new Profileable.StringProfileable("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23", ProfileInputType.TEXTURE_HASH)).apply();
-
+                ItemStack buttonItem = SkullItemCreator.byTextureUrlHash("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23");
                 setButton(0, 0, GuiUtils.createButtonItem(buttonItem, plugin.getLocale().getMessage("interface.button.back").getMessage()),
                         event -> event.player.closeInventory());
             }

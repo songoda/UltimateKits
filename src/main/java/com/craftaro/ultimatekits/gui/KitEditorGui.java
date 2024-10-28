@@ -5,7 +5,7 @@ import com.craftaro.core.gui.DoubleGui;
 import com.craftaro.core.gui.Gui;
 import com.craftaro.core.gui.GuiUtils;
 import com.craftaro.core.input.ChatPrompt;
-import com.craftaro.core.utils.ItemUtils;
+import com.craftaro.core.utils.SkullItemCreator;
 import com.craftaro.core.utils.TextUtils;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
@@ -75,7 +75,7 @@ public class KitEditorGui extends DoubleGui {
 
         // back button
         if (this.parent != null) {
-            setButton(0, 0, GuiUtils.createButtonItem(ItemUtils.getCustomHead("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
+            setButton(0, 0, GuiUtils.createButtonItem(SkullItemCreator.byTextureUrlHash("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
                             plugin.getLocale().getMessage("interface.button.back").getMessage()),
                     ClickType.LEFT,
                     event -> {

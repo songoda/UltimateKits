@@ -3,7 +3,7 @@ package com.craftaro.ultimatekits.gui;
 import com.craftaro.core.compatibility.CompatibleMaterial;
 import com.craftaro.core.gui.Gui;
 import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.utils.ItemUtils;
+import com.craftaro.core.utils.SkullItemCreator;
 import com.craftaro.core.utils.TextUtils;
 import com.craftaro.core.utils.TimeUtils;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
@@ -55,10 +55,10 @@ public class KitSelectorGui extends Gui {
                         .processPlaceholder("player", player.getName()).toText().split("\\|")));
 
         if (this.pages > 1) {
-            this.setNextPage(this.rows - 1, 5, GuiUtils.createButtonItem(ItemUtils.getCustomHead("1b6f1a25b6bc199946472aedb370522584ff6f4e83221e5946bd2e41b5ca13b"),
+            this.setNextPage(this.rows - 1, 5, GuiUtils.createButtonItem(SkullItemCreator.byTextureUrlHash("1b6f1a25b6bc199946472aedb370522584ff6f4e83221e5946bd2e41b5ca13b"),
                     plugin.getLocale().getMessage("interface.button.next").getMessage()));
 
-            this.setPrevPage(this.rows - 1, 3, GuiUtils.createButtonItem(ItemUtils.getCustomHead("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
+            this.setPrevPage(this.rows - 1, 3, GuiUtils.createButtonItem(SkullItemCreator.byTextureUrlHash("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
                     plugin.getLocale().getMessage("interface.button.last").getMessage()));
 
             this.setOnPage(pager -> showPage());
@@ -96,7 +96,7 @@ public class KitSelectorGui extends Gui {
         }
 
         if (category != null) {
-            setButton(0, 0, GuiUtils.createButtonItem(ItemUtils.getCustomHead("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
+            setButton(0, 0, GuiUtils.createButtonItem(SkullItemCreator.byTextureUrlHash("3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
                             plugin.getLocale().getMessage("interface.button.back").getMessage()),
                     event -> this.guiManager.showGUI(player, new CategorySelectorGui(plugin, player)));
         }
