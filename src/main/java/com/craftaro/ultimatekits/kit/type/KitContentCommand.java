@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 public class KitContentCommand implements KitContent {
-    private final String command; // Stored like "eco give <player> 100"
+    private final String command; // Stored like "eco give {player} 100"
 
     public KitContentCommand(String command) {
         this.command = command;

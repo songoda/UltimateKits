@@ -14,8 +14,6 @@ import com.craftaro.ultimatekits.gui.AnimatedKitGui;
 import com.craftaro.ultimatekits.gui.ConfirmBuyGui;
 import com.craftaro.ultimatekits.gui.PreviewKitGui;
 import com.craftaro.ultimatekits.key.Key;
-import com.craftaro.ultimatekits.kit.type.KitContentCommand;
-import com.craftaro.ultimatekits.kit.type.KitContentEconomy;
 import com.craftaro.ultimatekits.settings.Settings;
 import com.craftaro.ultimatekits.utils.ArmorType;
 import org.bukkit.entity.Player;
@@ -276,8 +274,10 @@ public class KitHandler {
                     plugin.getGuiManager().showGUI(player, new AnimatedKitGui(plugin, player, kit, item.getItem()));
                     return true;
                 } else {
-                    ItemStack parseStack = item.getContent().process(player).clone();
-                    if (!(item.getContent() instanceof KitContentEconomy || item.getContent() instanceof KitContentCommand)) {
+                    ItemStack parseStack = item.getContent().process(player);
+                    if (parseStack != null) {
+                        parseStack = parseStack.clone();
+
                         if (Settings.AUTO_EQUIP_ARMOR.getBoolean() && ArmorType.equip(player, parseStack)) {
                             continue;
                         }
