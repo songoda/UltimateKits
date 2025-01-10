@@ -99,33 +99,31 @@ public class AnimatedKitGui extends Gui {
         }
 
         // should we try to wrap it up?
-        if (this.finish) {
+        if (this.finish && !this.done) {
             ItemStack item = getItem(13);
             if (item == null) {
                 this.done = true; // idk.
             } else if (item.isSimilar(this.give.getItem())) {
-                if (!this.done) {
-                    this.done = true;
+                this.done = true;
 
-                    ItemStack parseStack = this.give.getContent().process(this.player);
-                    if (parseStack != null) {
-                        parseStack = parseStack.clone();
+                ItemStack parseStack = this.give.getContent().process(this.player);
+                if (parseStack != null) {
+                    parseStack = parseStack.clone();
 
-                        if (!Settings.AUTO_EQUIP_ARMOR.getBoolean() || !ArmorType.equip(this.player, parseStack)) {
-                            Map<Integer, ItemStack> overfilled = this.player.getInventory().addItem(parseStack);
-                            for (ItemStack item2 : overfilled.values()) {
-                                this.player.getWorld().dropItemNaturally(this.player.getLocation(), item2);
-                            }
+                    if (!Settings.AUTO_EQUIP_ARMOR.getBoolean() || !ArmorType.equip(this.player, parseStack)) {
+                        Map<Integer, ItemStack> overfilled = this.player.getInventory().addItem(parseStack);
+                        for (ItemStack item2 : overfilled.values()) {
+                            this.player.getWorld().dropItemNaturally(this.player.getLocation(), item2);
                         }
                     }
-
-                    XSound.ENTITY_PLAYER_LEVELUP.play(this.player, 10f, 10f);
-                    this.plugin.getLocale().getMessage("event.create.won")
-                            .processPlaceholder("item", WordUtils.capitalize(this.give.getType().name().toLowerCase().replace("_", " ")))
-                            .sendPrefixedMessage(this.player);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, this::finish, 50);
-                    setAllowClose(true);
                 }
+
+                XSound.ENTITY_PLAYER_LEVELUP.play(this.player, 10f, 10f);
+                this.plugin.getLocale().getMessage("event.create.won")
+                        .processPlaceholder("item", WordUtils.capitalize(this.give.getType().name().toLowerCase().replace("_", " ")))
+                        .sendPrefixedMessage(this.player);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, this::finish, 50);
+                setAllowClose(true);
             }
         }
     }
