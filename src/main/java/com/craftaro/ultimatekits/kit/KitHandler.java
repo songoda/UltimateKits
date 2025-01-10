@@ -271,7 +271,7 @@ public class KitHandler {
 
             if (random < chance) {
                 if (kit.getKitAnimation() != KitAnimation.NONE) {
-                    plugin.getGuiManager().showGUI(player, new AnimatedKitGui(plugin, player, kit, item.getItem()));
+                    this.plugin.getGuiManager().showGUI(player, new AnimatedKitGui(this.plugin, player, kit, item));
                     return true;
                 } else {
                     ItemStack parseStack = item.getContent().process(player);
