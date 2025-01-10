@@ -29,18 +29,18 @@ public class KitContentCommand implements KitContent {
 
     @Override
     public ItemStack getItemForDisplay() {
-        ItemStack stack = new ItemStack(Material.PAPER, 1);
-        ItemMeta meta = stack.getItemMeta();
+        ItemStack displayItem = new ItemStack(Material.PAPER, 1);
+        AdventureUtils.formatItemName(displayItem, UltimateKits.getInstance().getLocale().getMessage("general.type.command").getMessage());
+
         ArrayList<String> lore = new ArrayList<>();
         int index = 0;
         while (index < this.command.length()) {
             lore.add(ChatColor.GREEN + (index == 0 ? "/" : "") + ChatColor.GREEN + this.command.substring(index, Math.min(index + 30, this.command.length())));
             index += 30;
         }
-        AdventureUtils.formatItemLore(stack, lore);
-        AdventureUtils.formatItemName(stack, UltimateKits.getInstance().getLocale().getMessage("general.type.command").getMessage());
-        stack.setItemMeta(meta);
-        return stack;
+        AdventureUtils.formatItemLore(displayItem, lore);
+
+        return displayItem;
     }
 
     @Override
