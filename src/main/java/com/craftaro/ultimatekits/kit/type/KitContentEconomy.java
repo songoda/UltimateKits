@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
@@ -30,20 +29,18 @@ public class KitContentEconomy implements KitContent {
 
     @Override
     public ItemStack getItemForDisplay() {
-        ItemStack parseStack = new ItemStack(Material.PAPER, 1);
-        ItemMeta meta = parseStack.getItemMeta();
+        ItemStack displayItem = new ItemStack(Material.PAPER, 1);
+        AdventureUtils.formatItemName(displayItem, UltimateKits.getInstance().getLocale().getMessage("general.type.money").getMessage());
 
         ArrayList<String> lore = new ArrayList<>();
-
         int index = 0;
         while (index < String.valueOf(this.amount).length()) {
             lore.add(ChatColor.GREEN + (index == 0 ? UltimateKits.getInstance().getConfig().getString("Main.Currency Symbol") : "") + ChatColor.GREEN + String.valueOf(this.amount).substring(index, Math.min(index + 30, String.valueOf(this.amount).length())));
             index += 30;
         }
-        AdventureUtils.formatItemLore(parseStack, lore);
-        AdventureUtils.formatItemName(parseStack, UltimateKits.getInstance().getLocale().getMessage("general.type.money").getMessage());
-        parseStack.setItemMeta(meta);
-        return parseStack;
+        AdventureUtils.formatItemLore(displayItem, lore);
+
+        return displayItem;
     }
 
     @Override

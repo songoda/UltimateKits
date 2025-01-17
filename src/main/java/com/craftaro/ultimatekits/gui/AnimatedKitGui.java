@@ -15,14 +15,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class AnimatedKitGui extends Gui {
     static final Random rand = new Random();
 
     private final UltimateKits plugin;
     private final Player player;
-    private final ItemStack give;
+    private final KitItem give;
     private final ArrayDeque<KitItem> items = new ArrayDeque<>();
     private boolean finish = false;
     private boolean done = false;
@@ -30,7 +36,7 @@ public class AnimatedKitGui extends Gui {
     private int ticksPerUpdate = 3;
     private int task;
 
-    public AnimatedKitGui(UltimateKits plugin, Player player, Kit kit, ItemStack give) {
+    public AnimatedKitGui(UltimateKits plugin, Player player, Kit kit, KitItem give) {
         this.plugin = plugin;
         this.player = player;
         this.give = give;
@@ -93,32 +99,31 @@ public class AnimatedKitGui extends Gui {
         }
 
         // should we try to wrap it up?
-        if (this.finish) {
+        if (this.finish && !this.done) {
             ItemStack item = getItem(13);
-            KitItem kitItem = this.items.stream().filter(i -> i.getItem().isSimilar(item)).findFirst().orElse(null);
             if (item == null) {
                 this.done = true; // idk.
-            } else if (item.isSimilar(this.give)) {
-                if (!this.done) {
-                    this.done = true;
-                    if (!Settings.AUTO_EQUIP_ARMOR_ROULETTE.getBoolean() || !ArmorType.equip(this.player, this.give)) {
+            } else if (item.isSimilar(this.give.getItem())) {
+                this.done = true;
 
-                        ItemStack processedItem = kitItem.getContent().process(this.player);
-                        if (processedItem != null) {
-                            Map<Integer, ItemStack> overfilled = this.player.getInventory().addItem(this.give);
-                            for (ItemStack item2 : overfilled.values()) {
-                                this.player.getWorld().dropItemNaturally(this.player.getLocation(), item2);
-                            }
+                ItemStack parseStack = this.give.getContent().process(this.player);
+                if (parseStack != null) {
+                    parseStack = parseStack.clone();
+
+                    if (!Settings.AUTO_EQUIP_ARMOR.getBoolean() || !ArmorType.equip(this.player, parseStack)) {
+                        Map<Integer, ItemStack> overfilled = this.player.getInventory().addItem(parseStack);
+                        for (ItemStack item2 : overfilled.values()) {
+                            this.player.getWorld().dropItemNaturally(this.player.getLocation(), item2);
                         }
                     }
-
-                    XSound.ENTITY_PLAYER_LEVELUP.play(this.player, 10f, 10f);
-                    this.plugin.getLocale().getMessage("event.create.won")
-                            .processPlaceholder("item", WordUtils.capitalize(this.give.getType().name().toLowerCase().replace("_", " ")))
-                            .sendPrefixedMessage(this.player);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, this::finish, 50);
-                    setAllowClose(true);
                 }
+
+                XSound.ENTITY_PLAYER_LEVELUP.play(this.player, 10f, 10f);
+                this.plugin.getLocale().getMessage("event.create.won")
+                        .processPlaceholder("item", WordUtils.capitalize(this.give.getType().name().toLowerCase().replace("_", " ")))
+                        .sendPrefixedMessage(this.player);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, this::finish, 50);
+                setAllowClose(true);
             }
         }
     }
